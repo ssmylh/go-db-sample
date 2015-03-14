@@ -47,7 +47,10 @@ func main() {
 		return
 	}
 
-	tx.Commit()
+	err = tx.Commit()
+	if err != nil {
+		fmt.Printf("Failed to commit transaction: %s\n", err)
+	}
 
 	/* select all */
 	rows, err := db.Query("select id, misc from sample")
