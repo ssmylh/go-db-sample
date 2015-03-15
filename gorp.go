@@ -24,7 +24,7 @@ func main() {
 	dbmap := &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
 	defer dbmap.Db.Close()
 
-	dbmap.AddTableWithName(sample{}, "sample").SetKeys(false, "Id") // don't use autoincrement
+	dbmap.AddTableWithName(sample{}, "samples").SetKeys(false, "Id") // don't use autoincrement
 
 	/* create table */
 	err = dbmap.CreateTablesIfNotExists()
@@ -65,7 +65,7 @@ func main() {
 
 	/* select all */
 	var res1 []sample
-	_, err = dbmap.Select(&res1, "select * from sample")
+	_, err = dbmap.Select(&res1, "select * from samples")
 	if err != nil {
 		fmt.Printf("Failed to select: %s\n", err)
 		return

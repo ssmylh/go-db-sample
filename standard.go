@@ -16,7 +16,7 @@ func main() {
 	defer db.Close()
 
 	/* create table */
-	_, err = db.Exec("create table sample (id integer not null primary key, misc text)")
+	_, err = db.Exec("create table samples (id integer not null primary key, misc text)")
 	if err != nil {
 		fmt.Printf("Failed to create table: %s\n", err)
 		return
@@ -29,7 +29,7 @@ func main() {
 		return
 	}
 
-	stmt1, err := tx.Prepare("insert into sample (id, misc) values(?, ?)")
+	stmt1, err := tx.Prepare("insert into samples (id, misc) values(?, ?)")
 	if err != nil {
 		fmt.Printf("Failed to prepare insert query: %s\n", err)
 		return
@@ -53,7 +53,7 @@ func main() {
 	}
 
 	/* select all */
-	rows, err := db.Query("select id, misc from sample")
+	rows, err := db.Query("select id, misc from samples")
 	if err != nil {
 		fmt.Printf("Failed to execute query: %s\n", err)
 		return
@@ -71,7 +71,7 @@ func main() {
 	}
 
 	/* select one */
-	stmt2, err := db.Prepare("select misc from sample where id = ?")
+	stmt2, err := db.Prepare("select misc from samples where id = ?")
 	if err != nil {
 		fmt.Printf("Failed to prepare select query: %s\n", err)
 		return
