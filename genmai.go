@@ -49,7 +49,11 @@ func main() {
 
 	_, err = db.Insert(samples)
 	if err != nil {
-		fmt.Printf("Failed to insert: %s\n", err)
+		fmt.Printf("Failed to insert: %s\nTry to rollback transaction.", err)
+		err = db.Rollback() // if an error occurs, try to rollback transction.
+		if err != nil {
+			fmt.Printf("Failed to rollback transaction: %s\n", err)
+		}
 		return
 	}
 

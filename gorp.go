@@ -52,7 +52,11 @@ func main() {
 	for _, sample := range samples {
 		err = tx.Insert(&sample)
 		if err != nil {
-			fmt.Printf("Failed to insert: %s\n", err)
+			fmt.Printf("Failed to insert: %s\nTry to rollback transaction.", err)
+			err = tx.Rollback() // if an error occurs, try to rollback transction.
+			if err != nil {
+				fmt.Printf("Failed to rollback transaction: %s\n", err)
+			}
 			return
 		}
 	}

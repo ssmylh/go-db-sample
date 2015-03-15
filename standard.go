@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
+	"strconv"
 )
 
 func main() {
@@ -36,15 +37,16 @@ func main() {
 	}
 	defer stmt1.Close()
 
-	_, err = stmt1.Exec(1, "sample 1")
-	if err != nil {
-		fmt.Printf("Failed to exec stmt: %s\n", err)
-		return
-	}
-	_, err = stmt1.Exec(2, "sample 2")
-	if err != nil {
-		fmt.Printf("Failed to exec stmt: %s\n", err)
-		return
+	for i := 1; i < 3; i++ {
+		_, err = stmt1.Exec(i, "sample "+strconv.Itoa(i))
+		if err != nil {
+			fmt.Printf("Failed to exec stmt: %s\nTry to rollback transaction.", err)
+			err = tx.Rollback() // if an error occurs, try to rollback transction.
+			if err != nil {
+				fmt.Printf("Failed to rollback transaction: %s\n", err)
+			}
+			return
+		}
 	}
 
 	err = tx.Commit()
