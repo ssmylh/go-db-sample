@@ -11,6 +11,11 @@ type sample struct {
 	Misc string
 }
 
+// This implements `genmai.TableNamer` interface, in order to specify table name.
+func (s *sample) TableName() string {
+	return "samples"
+}
+
 func main() {
 	/* open db */
 	db, err := genmai.New(&genmai.SQLite3Dialect{}, ":memory:")
