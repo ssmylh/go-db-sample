@@ -1,6 +1,18 @@
 # go-db-sample
 
-Go database samples.
+This project is Go database/sql various samples which use SQLite 3.
+The following operaions are written:
+
+- create table
+- insert with transaction
+- select all
+- select one by record's id
+
+The definition of sample table is:
+
+```
+create table samples (id integer not null primary key, misc text);
+```
 
 ## Dependency
 
